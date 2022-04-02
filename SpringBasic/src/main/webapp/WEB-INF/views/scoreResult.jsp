@@ -8,6 +8,14 @@
 </head>
 <body>
 	<h1>나의 성적</h1>
-	
+	<p>과목별 평균</p>
+	수학 : ${math }<br/>
+	영어 : ${eng }<br/>
+	언어 : ${lang }<br/>
+	사회 : ${social }<br/>
+	컴퓨터 : ${com }<br/>
+	<p>총점과 평균</p>
+	총점 : ${total }<br/>
+	평균 : ${avg }
 </body>
 </html>
