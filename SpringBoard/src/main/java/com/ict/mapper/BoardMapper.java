@@ -17,6 +17,11 @@ public interface BoardMapper {
 	// 리턴자료형은 글 하나를 담당할 수 있는 BoardVO로 해야함.
 	public BoardVO select(long bno); // bno말고 한글로도 가능 
 	
+	// DELETE는 리턴자료를 void로 적는다
+	// 하나의 글만 삭제할 예정이므로, 삭제할 글 번호를 같이 입력
 	public void delete(long bno);
+	
+	public void update(BoardVO vo);
+	
 	
 }

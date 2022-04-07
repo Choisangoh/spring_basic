@@ -20,7 +20,7 @@ public class BoardMapperTests {
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	//@Test
+	@Test
 	public void testGetList() {
 		List<BoardVO> result = boardMapper.getList();
 		System.out.println("저장된 게시물 정보 : " + boardMapper.getList());
@@ -54,5 +54,18 @@ public class BoardMapperTests {
 		boardMapper.delete(22);
 	}
 
+	//@Test
+	public void tesetUpdate() {
+		BoardVO vo = new BoardVO();
+		System.out.println("전달데이터 입력 안된 vo : " + vo);
+		
+		vo.setTitle("수정 제목");
+		vo.setContent("수정 내용");
+		vo.setBno(4);
+		
+		System.out.println("전달데이터 입력 된 vo : " + vo);
+		
+		boardMapper.update(vo);
+	}
 
 }
