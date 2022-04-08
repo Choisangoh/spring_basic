@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ict.domain.BoardVO;
 import com.ict.mapper.BoardMapper;
@@ -24,8 +25,8 @@ public class BoardController {
 	// 전체 글 목록을 볼 수 있는 페이지인 boardList.jsp로 연결되는 
 	// /boardList주소를 get방식으로 선언
 	// 메서드 내부에서는 boardMapper의 .getList를 호출해 그 결과를 바인딩
-	@GetMapping(value="/boardList")
-	public String boardList(Model model) {
+	@GetMapping("/boardList")
+	public String boardList(Model model) { 
 		// model.addAttibute("바인딩 이름", 바인딩 자료);
 		List<BoardVO> boardList = boardMapper.getList();
 		model.addAttribute("boardList", boardList);
@@ -36,10 +37,56 @@ public class BoardController {
 	// /boardDetail주소를 get방식으로 선언
 	// 주소 뒤에 ?bno=번호 형식으로 화면에는 적힌 번호 글만 조회가능
 	// @PathVariable적용 방식으로 바꾸기
-	@GetMapping(value="/boardDetail")
+	@GetMapping("/boardDetail/{bno}")
 	public String boardDetail(@PathVariable long bno, Model model) {
-		BoardVO boardDetail = boardMapper.select(bno);
-		model.addAttribute("boardDetail", boardDetail);
+		BoardVO board = boardMapper.select(bno);
+		model.addAttribute("board", board);
 		return "boardDetail";
+	}
+	
+	// insert페이지를 위한 폼으로 연결되는 컨트롤러 먼저 만들기
+	// get방식으로 /boardInsert 주소 접속 시 form페이지로 연결
+	@GetMapping("/boardInsert")
+	public String boardInsertForm() {
+		return "boardInsertForm";
+	}
+	
+	// /boradInsert인데 post방식을 처리하는 메서드 만들기
+	// BoardVO를 입력받도록 해주면 실제로는 BoardVO의 맴버변수명으로 들어오는 자료를 입력받음
+	// 입력받은 BoardVO를 토대로 mapper쪽의 insert메서드를 실행하고
+	// 리다이렉트는 return "redirect:/목적지주소" 형식으로 리턴구문 작성
+	// boardList로 돌려보내기
+	@PostMapping("/boardInsert")
+	public String boardInsert(BoardVO vo) {
+	    boardMapper.insert(vo);
+		return "redirect:/boardList";		
+	}
+	
+	// 글삭제 로직은 post방식
+	// /boardDelete 주소로 처리하고
+	// bno를 받아서 해당 글 삭제
+	// 글 삭제 버튼은 detail페이지 하단에 form으로 만들어서 bno를 hidden으로 전달하는 
+	// submit버튼 생성하기
+	@PostMapping("/boardDelete")
+	public String boardDelete(long bno) {
+		boardMapper.delete(bno);
+		return "redirect:/boardList";
+	}
+	
+	// /boardUpdateForm를 post방식으로 접속하는 form 연결 메서드 만들기
+	// update로직은 이미 데이터가 입력되어 있어야 됨
+	// 따라서 내가 수정하고자 하는 글의 정보를 VO로 받아온 다음
+	// 폼 페이지에 포워딩해서 기입해야함.
+	@PostMapping("/boardUpdateForm")
+	public String boardUpdateForm(long bno, Model model) {		
+		BoardVO board = boardMapper.select(bno);
+		model.addAttribute("board", board);
+		return "boardUpdateForm";
+	}
+	
+	@PostMapping("/boardUpdate")
+	public String boardUpdate(BoardVO vo) {
+	boardMapper.update(vo);
+	return "redirect:/boardList";
 	}
 }
