@@ -26,9 +26,9 @@ public class BoardController {
 	// /boardList주소를 get방식으로 선언
 	// 메서드 내부에서는 boardMapper의 .getList를 호출해 그 결과를 바인딩
 	@GetMapping("/boardList")
-	public String boardList(Model model) { 
+	public String boardList(long pageNum, Model model) { 
 		// model.addAttibute("바인딩 이름", 바인딩 자료);
-		List<BoardVO> boardList = boardMapper.getList();
+		List<BoardVO> boardList = boardMapper.getList(pageNum);
 		model.addAttribute("boardList", boardList);
 		return "boardList";
 	}
@@ -84,9 +84,14 @@ public class BoardController {
 		return "boardUpdateForm";
 	}
 	
+	// /boardUpdate를 post방식으로 접속하는 메서드 만들기
+	// update(BoardVO)를 실행해서, 폼에서 날려준 데이터를 토대로
+	// 해당 글의 내용이 수정되도록 만들기
+	// 수정 후에는 수정요청이 들어온 글 번호의 디테일 페이지로 리다이렉트 시키기
+	
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(BoardVO vo) {
 	boardMapper.update(vo);
-	return "redirect:/boardList";
+	return "redirect:/boardDetail/" + vo.getBno();
 	}
 }

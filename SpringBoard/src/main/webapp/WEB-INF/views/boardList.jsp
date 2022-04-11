@@ -34,7 +34,7 @@
 	        </c:forEach>
 	      </tbody>
 	    </table>
-	    <a href="/boardList" class="btn btn-warning">글쓰기</a>
+	    <a href="/boardInsert" class="btn btn-warning">글쓰기</a>
     </div>
 </body>
 </html>

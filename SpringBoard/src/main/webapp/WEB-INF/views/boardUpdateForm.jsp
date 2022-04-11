@@ -8,9 +8,10 @@
 </head>
 <body>
 	<form action="/boardUpdate" method="post">
-		<input type="text" value="${board.title }" >
-		<input type="text" value="${board.writer }" ><br/>
-		<textarea rows="20" cols="100">${board.content }</textarea><br/>
+		<input type="hidden" name="bno" value="${board.bno }" >
+		<input type="text" name="title" value="${board.title }" >
+		<input type="text" name="writer" value="${board.writer }" ><br/>
+		<textarea  name="content" rows="20" cols="100">${board.content }</textarea><br/>
 		<input type="submit" value="수정">
 		<input type="reset" value="초기화">
 	</form>
