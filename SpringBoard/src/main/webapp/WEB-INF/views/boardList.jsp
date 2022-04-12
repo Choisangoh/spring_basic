@@ -35,6 +35,31 @@
 	      </tbody>
 	    </table>
 	    <a href="/boardInsert" class="btn btn-warning">글쓰기</a>
-    </div>
+   		${pageMaker }<br/>
+   
+		  <ul class="pagination justify-content-center">
+		  
+		  	<c:if test="${pageMaker.prev }">
+		  		<li class="page-item">
+		  			<a class="page-link" href="/boardList?pageNum=${pageMaker.startPage - 1}">이전</a>
+		  		</li>
+		  	</c:if>
+		  	
+		  	<!-- 밑에 깔아줄 버튼들 -->
+		  	<c:forEach var="idx" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+    			<li class="page-item ${pageMaker.cri.pageNum eq idx ? 'active' : '' }">
+    				<a class="page-link" href="/boardList?pageNum=${idx }">${idx }</a>
+    			</li>
+    		</c:forEach>
+    		
+		    <c:if test="${pageMaker.next }">
+		  		<li class="page-item">
+		  			<a class="page-link" href="/boardList?pageNum=${pageMaker.endPage + 1}">다음</a>
+		  		</li>
+		  	</c:if>
+		  
+		  </ul>
+		  
+	  </div>
 </body>
 </html>
