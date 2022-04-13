@@ -14,7 +14,7 @@ public class PageMaker {
 	// displayPageNum을 선언
 	private int displayPageNum;
 	// Criteria에서 현재 조회중인 페이지 정보  + 한 페이지에 걸리는 글 개수를 받아와야함
-	private Criteria cri;
+	private SearchCriteria cri;
 	private int tempEndpage;
 	
 	
@@ -53,7 +53,7 @@ public class PageMaker {
 
 
 	public PageMaker(int totalBoard, int startPage, int endPage, boolean prev, boolean next, int displayPageNum,
-			Criteria cri, int tempEndpage) {
+			SearchCriteria cri, int tempEndpage) {
 		super();
 		this.totalBoard = totalBoard;
 		this.startPage = startPage;
@@ -114,11 +114,11 @@ public class PageMaker {
 		this.displayPageNum = displayPageNum;
 	}
 
-	public Criteria getCri() {
+	public SearchCriteria getCri() {
 		return cri;
 	}
 
-	public void setCri(Criteria cri) {
+	public void setCri(SearchCriteria cri) {
 		this.cri = cri;
 	}	
 	

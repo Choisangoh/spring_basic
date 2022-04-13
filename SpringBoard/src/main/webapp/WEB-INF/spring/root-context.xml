@@ -24,6 +24,7 @@
 	</bean>
 
 	<mybatis-spring:scan base-package="com.ict.mapper"/>
-	<mybatis-spring:scan base-package="com.ict.time.mapper"/>
-
+	<mybatis-spring:scan base-package="com.ict.time.mapper"/>	
+	
+	<context:component-scan base-package="com.ict.service"/>
 </beans>
