@@ -38,13 +38,13 @@ public class BoardController {
 	//}
 	public String boardList(SearchCriteria cri, Model model) {
 		// model.addAttibute("바인딩 이름", 바인딩 자료);
-		List<BoardVO> boardList = service.getList(cri);
+		List<BoardVO> boardList = service.getList(cri);	
 		model.addAttribute("boardList", boardList);
 		
 		// 버튼 처리를 위해 추가로 페이지메이커 생성 및 세팅
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri); // cri 입력
-		int countPage = service.countPageNum();// 실제 DB내 글 개수 받아오기
+		int countPage = service.countPageNum(cri);// 실제 DB내 글 개수 받아오기
 		pageMaker.setTotalBoard(countPage); // calcData()호출도 되면서 순식간에 prev, next, startPage, endPage 세팅
 		model.addAttribute("pageMaker", pageMaker);		
 		return "boardList";

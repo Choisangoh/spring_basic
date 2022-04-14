@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ict.domain.BoardVO;
+import com.ict.domain.SearchCriteria;
 import com.ict.mapper.BoardMapper;
 
 import lombok.extern.log4j.Log4j;
@@ -20,6 +21,7 @@ public class BoardMapperTests {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	/*
 	@Test
 	public void testGetList() {
 		List<BoardVO> result = boardMapper.getList();
@@ -67,5 +69,12 @@ public class BoardMapperTests {
 		
 		boardMapper.update(vo);
 	}
-
+	*/
+	@Test
+	public void SearchList() {
+		SearchCriteria cri = new SearchCriteria();
+		cri.setKeyword("테스트");
+		cri.setSearchType("t");
+		boardMapper.getList(cri);
+	}
 }

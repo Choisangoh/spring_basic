@@ -27,7 +27,7 @@
 	 </div>
 	 <div class="row">
 		 <div class="col-md-2">
-		  	<a href="/boardList" class="btn btn-success">목록</a>
+		  	<a href="/boardList?pageNum=${param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-success">목록</a>
 		 </div>
 		 <div class="col-md-2">
 		  	<form action="/boardUpdateForm" method="post">
