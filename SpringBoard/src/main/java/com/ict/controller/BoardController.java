@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ict.domain.BoardVO;
 import com.ict.domain.PageMaker;
@@ -85,8 +86,11 @@ public class BoardController {
 	// 글 삭제 버튼은 detail페이지 하단에 form으로 만들어서 bno를 hidden으로 전달하는 
 	// submit버튼 생성하기
 	@PostMapping("/boardDelete")
-	public String boardDelete(long bno) {
+	public String boardDelete(long bno, SearchCriteria cri, RedirectAttributes rttr) {
 		service.delete(bno);
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("searchType", cri.getSearchType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		return "redirect:/boardList";
 	}
 	
@@ -106,7 +110,23 @@ public class BoardController {
 	// 해당 글의 내용이 수정되도록 만들기
 	// 수정 후에는 수정요청이 들어온 글 번호의 디테일 페이지로 리다이렉트 시키기
 	@PostMapping("/boardUpdate")
-	public String boardUpdate(BoardVO vo) {
+								        // keyword, searchType, pageNum을 받기위해 선언
+	public String boardUpdate(BoardVO vo, SearchCriteria cri, RedirectAttributes rttr) {
+	// SearchCriteria가 제대로 받아오는지 체크
+	System.out.println("수정 로직임 " + vo);	
+	System.out.println("검색 키워드 : " + cri.getKeyword());	
+	System.out.println("검색 조건 : " + cri.getSearchType());	
+	System.out.println("진입 페이지 번호 : " + cri.getPageNum());	
+	
+	// 리다이렉트시 주소창 뒤에 파라미터 쿼리스트링 형식으로 붙이기
+	// rttr.addAttribute("파라미터명", "전달자료")
+	// 는 호출되면 redirect 주소 뒤에 파라미터를 붙여준다
+	// rttr.addFlashAttribute()는 넘어간 페이지에서 파라미터를
+	// 쓸 수 있도록 전달하는것으로 둘의 역할이 다르니 주의!
+	rttr.addAttribute("pageNum", cri.getPageNum());
+	rttr.addAttribute("searchType", cri.getSearchType());
+	rttr.addAttribute("keyword", cri.getKeyword());
+	
 	service.update(vo);
 	return "redirect:/boardDetail/" + vo.getBno();
 	}
