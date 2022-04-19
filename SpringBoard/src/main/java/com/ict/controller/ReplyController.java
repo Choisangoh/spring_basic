@@ -1,9 +1,13 @@
 package com.ict.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ict.domain.ReplyVO;
 import com.ict.service.ReplyService;
 
+import lombok.Getter;
+
 @RestController
-@RequestMapping("/replies")// replies가 기본적으로 붙음
+@RequestMapping("/replies")// 접속 시 기본주소에 replies가 붙음
 public class ReplyController {
 
 	@Autowired
@@ -43,11 +49,25 @@ public class ReplyController {
 		}
 		// 위의 try블럭이나 catch블럭에서 얻어온 entity 변수 리턴하기.
 		return entity;
+	}	
+	
+	@GetMapping(value="/all/{bno}",
+			// 단일 숫자 데이터 bno만 넣어서 소화하기도 하고,
+			// @PathVariable로 이미 입력데이터가 명시되었으므로
+			// consumes는 따로 주지 않아도 된다.
+	produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<ReplyVO>> list (@PathVariable("bno") Long bno){
+		ResponseEntity<List<ReplyVO>> entity = null;		
+		try {
+			entity = new ResponseEntity<>(
+					service.listReply(bno), HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
-	
-	
 }
-
 
 
 
