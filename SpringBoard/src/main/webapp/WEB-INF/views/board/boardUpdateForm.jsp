@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/boardUpdate" method="post">
+	<form action="/board/boardUpdate" method="post">
 		<input type="hidden" name="bno" value="${board.bno }" >
 		<input type="text" name="title" value="${board.title }" >
 		<input type="text" name="writer" value="${board.writer }" ><br/>

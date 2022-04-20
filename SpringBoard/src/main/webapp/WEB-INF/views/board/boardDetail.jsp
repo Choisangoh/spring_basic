@@ -27,10 +27,10 @@
 	 </div>
 	 <div class="row">
 		 <div class="col-md-2">
-		  	<a href="/boardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-success">목록</a>
+		  	<a href="/board/boardList?pageNum=${param.pageNum == null ? 1 : param.pageNum }&searchType=${param.searchType}&keyword=${param.keyword}" class="btn btn-success">목록</a>
 		 </div>
 		 <div class="col-md-2">
-		  	<form action="/boardUpdateForm" method="post">
+		  	<form action="/board/boardUpdateForm" method="post">
 		  		<input type="hidden" value="${board.bno }" name="bno">
 		  		<input type="hidden" value="${param.pageNum}" name="pageNum">
 		  		<input type="hidden" value="${param.searchType}" name="searchType">
@@ -39,7 +39,7 @@
 		  	</form>
 		 </div>
 		 <div class="col-md-2">
-		  	<form action="/boardDelete" method="post">
+		  	<form action="/board/boardDelete" method="post">
 		  		<input type="hidden" value="${board.bno }" name="bno">
 		  		<input type="hidden" value="${param.pageNum}" name="pageNum">
 		  		<input type="hidden" value="${param.searchType}" name="searchType">

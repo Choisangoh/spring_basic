@@ -25,7 +25,7 @@
 	        <c:forEach var="board" items="${boardList }">
 	          <tr>
 	            <td>${board.bno }</td>
-	            <td><a href="/boardDetail/${board.bno }?pageNum=${pageMaker.cri.pageNum }&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">${board.title }</a></td>
+	            <td><a href="/board/boardDetail/${board.bno }?pageNum=${pageMaker.cri.pageNum }&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">${board.title }</a></td>
 	            <td>${board.writer }</td>
 	            <td>${board.regdate }</td>
 	            
@@ -34,7 +34,7 @@
 	        </c:forEach>
 	      </tbody>
 	    </table>
-	    <a href="/boardInsert" class="btn btn-warning">글쓰기</a><br/>
+	    <a href="/board/boardInsert" class="btn btn-warning">글쓰기</a><br/>
    		${pageMaker }<br/>
    
 		  <ul class="pagination justify-content-center">
@@ -54,14 +54,14 @@
     		
 		    <c:if test="${pageMaker.next }">
 		  		<li class="page-item">
-		  			<a class="page-link" href="/boardList?pageNum=${pageMaker.endPage + 1}&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">다음</a>
+		  			<a class="page-link" href="/board/boardList?pageNum=${pageMaker.endPage + 1}&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">다음</a>
 		  		</li>
 		  	</c:if>
 		  			  
 		  </ul>
 		  <div class="row">
 		  	<!-- 검색창 부분 -->
-		  	<form action="/boardList" method="get">
+		  	<form action="/board/boardList" method="get">
 		  		<!-- select태그를 이용해서 클릭해 검색조건을 선택하도록 처리 -->
 		  		<select name="searchType">		  		
 		  			<!-- 검색조건을 option태그를 이용해 만들기 -->

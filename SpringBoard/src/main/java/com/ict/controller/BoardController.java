@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ict.domain.BoardVO;
@@ -20,6 +21,7 @@ import lombok.extern.log4j.Log4j;
 // 컨트롤러가 컨트롤러 기능을 할 수 있도록 처리
 @Controller
 @Log4j
+@RequestMapping("/board")
 public class BoardController {
 	
 	// 컨트롤러는 Service만 호출하도록 구조를 바꾼다
@@ -51,7 +53,7 @@ public class BoardController {
 		int countPage = service.countPageNum(cri);// 실제 DB내 글 개수 받아오기
 		pageMaker.setTotalBoard(countPage); // calcData()호출도 되면서 순식간에 prev, next, startPage, endPage 세팅
 		model.addAttribute("pageMaker", pageMaker);		
-		return "boardList";
+		return "board/boardList";
 	}
 
 	// 글 하나만 조회할 수 있는 디테일 페이지인 boardDetail.jsp로 연결되는
@@ -62,14 +64,14 @@ public class BoardController {
 	public String boardDetail(@PathVariable long bno, Model model) {
 		BoardVO board = service.select(bno);
 		model.addAttribute("board", board);
-		return "boardDetail";
+		return "board/boardDetail";
 	}
 	
 	// insert페이지를 위한 폼으로 연결되는 컨트롤러 먼저 만들기
 	// get방식으로 /boardInsert 주소 접속 시 form페이지로 연결
 	@GetMapping("/boardInsert")
 	public String boardInsertForm() {
-		return "boardInsertForm";
+		return "board/boardInsertForm";
 	}
 	
 	// /boradInsert인데 post방식을 처리하는 메서드 만들기
@@ -80,7 +82,7 @@ public class BoardController {
 	@PostMapping("/boardInsert")
 	public String boardInsert(BoardVO vo) {
 	    service.insert(vo);
-		return "redirect:/boardList";		
+		return "redirect:/board/boardList";		
 	}
 	
 	// 글삭제 로직은 post방식
@@ -94,7 +96,7 @@ public class BoardController {
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("searchType", cri.getSearchType());
 		rttr.addAttribute("keyword", cri.getKeyword());
-		return "redirect:/boardList";
+		return "redirect:/board/boardList";
 	}
 	
 	// /boardUpdateForm를 post방식으로 접속하는 form 연결 메서드 만들기
@@ -105,7 +107,7 @@ public class BoardController {
 	public String boardUpdateForm(long bno, Model model) {		
 		BoardVO board = service.select(bno);
 		model.addAttribute("board", board);
-		return "boardUpdateForm";
+		return "board/boardUpdateForm";
 	}
 	
 	// /boardUpdate를 post방식으로 접속하는 메서드 만들기
@@ -131,7 +133,7 @@ public class BoardController {
 	rttr.addAttribute("keyword", cri.getKeyword());
 	
 	service.update(vo);
-	return "redirect:/boardDetail/" + vo.getBno();
+	return "redirect:/board/boardDetail/" + vo.getBno();
 	}
 	
 }
