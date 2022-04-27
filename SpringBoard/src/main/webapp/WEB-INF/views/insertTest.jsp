@@ -3,10 +3,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style>
+	#modDiv {
+		width: 300px;
+		height: 100px;
+		background-color: green;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: -50px;
+		margin-left: -150px;
+		padding: 10px;
+		z-index: 1000;
+		
+		}
+</style>
+
 </head>
 <body>
+
 	<h2>Ajax 댓글 등록 테스트</h2>
 	<!-- 댓글이 추가될 공간 -->
 	<ul id="replies">
@@ -23,12 +43,18 @@
 		<button id="replyAddBtn">댓글 추가</button>
 	</div>
 	
-	<!-- 위임 이해를 위한 코드(삭제예정)  -->
-	<button class="test">테스트1</button>
-	<button class="test">테스트2</button>
-	<button class="test">테스트3</button>
-	<button class="test">테스트4</button>
-	
+	<!-- modal 창 띄우기 -->
+	<div id="modDiv" style="display:none;">
+		<div class="modal-title"></div>
+		<div>
+			<input type="text" id="reply">
+		</div>
+		<div>
+			<button id="replyModBtn">수정</button>
+			<button id="replyDelBtn">삭제</button>
+			<button id="closeBtn">닫기</button>
+		</div>
+	</div>
 	
 	
 	<!-- jquery cdn 가져오기 -->
@@ -36,7 +62,7 @@
 	
 	<!-- 스크립트 태그로 자바스크립트 요청 확인 -->
 	<script>
-		var bno = 147474;
+		var bno = 190000;
 		
 		// 전체 댓글 가져오기
 		function getAllList(){
@@ -66,7 +92,7 @@
 				console.log(str);
 				$("#replies").html(str);			
 			});
-		}		
+		}
 		getAllList();// 댓글 전체 들고와서 #replies에 심어주는 로직 실행
 		
 		$("#replyAddBtn").on("click", function(){
@@ -100,15 +126,7 @@
 						$("#newReplyText").val("");
 					}
 				}
-			});		
-			
-		});
-		
-		//.test를 클릭하면 "테스트 클릭 감지" 라는 alert을 띄우도록 이벤트를 걸어보세요.
-		$(".test").on("click", function(){
-			console.log(this.html());
-			// 클릭요소의 텍스트까지 같이 띄워주세요(ex : 테스트1 클릭 감지...)
-			alert(this + "클릭 감지.");
+			});					
 		});
 		
 		// 이벤트 위임
@@ -126,10 +144,68 @@
 			// rno뿐만 아니라 본문도 가져와야함
 			var reply = replytag.text();// 내부 text를 가져옴
 			alert(rno + " : " + reply);// 내부 text와 댓글번호를 alert으로 띄움
+			
+			$(".modal-title").html(rno); // modal-title 부분에 글번호 입력
+			$("#reply").val(reply); // reply 영역에 리플 내용 기입(수정/삭제)
+			$("#modDiv").show("slow") // 버튼 누르면 모달 열림 
 		});
 		
+		// 모달 창 닫기 이벤트
+		$("#closeBtn").on("click", function(){ // #closeBtn 클릭 시
+			$("#modDiv").hide("slow"); // #modDiv 닫기
+		});
+		
+		// 삭제 로직
+		$("#replyDelBtn").on("click", function(){
+				let rno = $(".modal-title").html();
+			
+				$.ajax({
+					type : 'delete',
+					url : '/replies/' + rno,
+					headers : {
+						"X-HTTP-Method-Override" : "POST"
+					},
+					dataType : 'text',
+					success : function(result) {
+						comsole.log("result: " + result)
+						if(result == 'SUCCESS'){
+							alert("삭제 되었습니다");
+							$("#modDiv").hide("slow");
+							getAllList(); // 삭제된 댓글 반영한 새 댓글목록 갱신
+						}
+					}
+				}),		
+			});	
+		
+			// 수정 로직
+			$("#replyModBtn").on("click", function(){
+				let rno = $(".modal-title").html();
+				let reply = $("#reply").val();
+			
+				$.ajax({
+					type : 'delete',
+					url : '/replies/' + rno,
+					headers : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "PATCH"
+					},
+					contentType : "application/json",
+					data : JSON.stringify({reply:reply}),
+					dataType : 'text',
+					success : function(result) {
+						console.log("result: " + result); 
+						if(result == 'SUCCESS'){
+							alert("수정 되었습니다");
+							$("#modDiv").hide("slow");
+							getAllList(); // 수정한 댓글 반영한 새 댓글목록 갱신
+						}
+					}
+				}),		
+			});
+			
+			// 
 		
 	</script>
-	
+
 </body>
 </html>
