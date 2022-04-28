@@ -13,6 +13,14 @@ public class ReplyVO {
 	private String replyer;
 	private Date replyDate;
 	private Date updateDate;
+	private Long rownum;
+	
+	public Long getRownum() {
+		return rownum;
+	}
+	public void setRownum(Long rownum) {
+		this.rownum = rownum;
+	}
 	public Long getRno() {
 		return rno;
 	}
@@ -52,9 +60,9 @@ public class ReplyVO {
 	@Override
 	public String toString() {
 		return "ReplyVO [rno=" + rno + ", bno=" + bno + ", reply=" + reply + ", replyer=" + replyer + ", replyDate="
-				+ replyDate + ", updateDate=" + updateDate + "]";
+				+ replyDate + ", updateDate=" + updateDate + ", rownum=" + rownum + "]";
 	}
-	public ReplyVO(Long rno, Long bno, String reply, String replyer, Date replyDate, Date updateDate) {
+	public ReplyVO(Long rno, Long bno, String reply, String replyer, Date replyDate, Date updateDate, Long rownum) {
 		super();
 		this.rno = rno;
 		this.bno = bno;
@@ -62,6 +70,7 @@ public class ReplyVO {
 		this.replyer = replyer;
 		this.replyDate = replyDate;
 		this.updateDate = updateDate;
+		this.rownum = rownum;
 	}
 	public ReplyVO() {
 		
