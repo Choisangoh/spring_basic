@@ -16,8 +16,10 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private Date updatedate;
-	
-	public BoardVO(long bno, String title, String content, String writer, Date regdate, Date updatedate) {
+	private int Replycount;
+
+	public BoardVO(long bno, String title, String content, String writer, Date regdate, Date updatedate,
+			int replycount) {
 		super();
 		this.bno = bno;
 		this.title = title;
@@ -25,6 +27,7 @@ public class BoardVO {
 		this.writer = writer;
 		this.regdate = regdate;
 		this.updatedate = updatedate;
+		Replycount = replycount;
 	}
 
 	public BoardVO() {
@@ -34,7 +37,7 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", updatedate=" + updatedate + "]";
+				+ regdate + ", updatedate=" + updatedate + ", Replycount=" + Replycount + "]";
 	}
 
 	public long getBno() {
@@ -83,6 +86,14 @@ public class BoardVO {
 
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
+	}
+
+	public int getReplycount() {
+		return Replycount;
+	}
+
+	public void setReplycount(int replycount) {
+		Replycount = replycount;
 	}
 	
 	
