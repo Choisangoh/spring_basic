@@ -31,5 +31,10 @@
 	<select id="getBno" resultType="long">
 		SELECT bno FROM reply WHERE rno = #{rno}
 	</select>	
+	
+	<delete id="deleteAllReplies">
+		DELETE FROM reply_tbl
+			WHERE bno = #{bno}
+	</delete>
 
 </mapper>

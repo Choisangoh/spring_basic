@@ -18,5 +18,8 @@ public interface ReplyMapper {
 	public void delete (Long bno);
 	
 	// 댓글번호를 통해 글번호 유추하기
-	public int getBno(int rno);
+	public Long getBno(Long rno);
+
+	// bno번 글에 달린 대슬을 다 삭제하는 쿼리문 생성
+	public void deleteAllReplies(Long bno);
 }

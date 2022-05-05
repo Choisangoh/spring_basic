@@ -40,8 +40,9 @@ public class ReplyServiceImpl implements ReplyService {
 	@Transactional
 	@Override
 	public void removeReply(Long rno) {
-		mapper.delete(rno);
 		Long bno = mapper.getBno(rno);
+		mapper.delete(rno);
+		// DB에서 커밋 안하면 pending 상태로 계속 지연되니 주의!!!
 		boardmapper.updateReplyCount(bno, -1);
 	}	
 }
