@@ -15,7 +15,7 @@
 		<input type="checkbox" name="role" value="ROLE_ADMIN">어드민 권한&nbsp;&nbsp;&nbsp;
 		<input type="checkbox" name="role" value="ROLE_MEMBER">정회원 권한&nbsp;&nbsp;&nbsp;
 		<input type="checkbox" name="role" value="ROLE_USER">준회원 권한<br/>
-		<input type="hidden" name="${_crsf.parameterName }" value="${_crsf.token }"/>
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 		<input type="submit" value="가입하기">
 	</form>
 </body>
